@@ -14,7 +14,7 @@ spec:
         app: jenkins
     spec:
       containers:
-      - image: jenkins:latest
+      - image: jenkins
         imagePullPolicy: Always
         name: jenkins
         ports:
