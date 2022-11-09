@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: jenkins
-        image: jenkins:latest
+        image: jenkins/jenkins:lts
 ---
 apiVersion: v1
 kind: Service
