@@ -14,12 +14,8 @@ spec:
         app: jenkins
     spec:
       containers:
-      - image: docker/jenkins:latest
-        imagePullPolicy: Always
-        name: jenkins
-        ports:
-        - containerPort: 8080
-        - containerPort: 50000
+      - name: jenkins
+        image: jenkins:latest
 ---
 apiVersion: v1
 kind: Service
