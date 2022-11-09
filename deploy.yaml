@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: deployment-jenkins
+spec:
+  selector:
+    matchLabels:
+      app: jenkins
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jenkins
+    spec:
+      containers:
+      - image: jenkins:latest
+        imagePullPolicy: Always
+        name: jenkins
+        ports:
+        - containerPort: 8080
+        - containerPort: 50000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: service-jenkins
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+    - port: 50000
+      targetPort: 50000
+      protocol: TCP
+  type: NodePort
+  selector:
+    app: jenkins
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: default
+  name: ingress-jenkins
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: service-jenkins
+              port:
+                number: 80
+                number: 50000
