@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx/nginx:alpine
+        image: nginx:alpine
 ---
 apiVersion: v1
 kind: Service
